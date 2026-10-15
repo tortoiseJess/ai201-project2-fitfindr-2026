@@ -28,7 +28,7 @@ tool calls and returns a fit card — in at least 4 of 5 tries.
 <!-- Why 4 of 5 and not 5 of 5? Something about your search, probably —
      "my search is a plain keyword match and some phrasings will miss" is a
      real answer. -->
-
+I picked 4 of 5 because my search is a plain keyword match and some phrasing will miss and my parsing logic does not cover all regex patterns.
 ---
 
 ## 2. An impossible query stops before the second tool
@@ -39,7 +39,7 @@ Given a query that matches no listings, the agent stops before calling
 **Why this target:**
 <!-- Why is 5 of 5 reasonable here when criterion 1 isn't? What's different
      about this path? -->
-
+I want the agent to strictly follow this rule and stop when there is no match, allowing me to debug in fitcard --exclude the possiblity of an empty search return.
 ---
 
 ## 3. Something about state
@@ -54,10 +54,10 @@ Given a query that matches no listings, the agent stops before calling
      compares session["selected_item"] against what actually reached
      suggest_outfit is the shape you're after. -->
 
-
+the list[dict] list of listings found in the search should have every element the same in the subsequent tool that it calls in all of the 5 /5 runs.
 
 **Why this target:**
-
+The agent should not be allowed to change state. And it would be easier to debug if there was a state bug or the llm needs better prompting.
 
 
 ---
@@ -74,12 +74,12 @@ Given a query that matches no listings, the agent stops before calling
      mentions the price? Two different items producing the same opening
      sentence? A card longer than a caption anyone would post? Any of those can
      be turned into a number. -->
-
+     The card should always be less then 150 words in all of the 5/5 runs.
 
 
 **Why this target:**
 
-
+This word count is from the instagram highest engagement posts count. So I can ensure that it will attract readers.
 
 ---
 
@@ -92,10 +92,10 @@ Given a query that matches no listings, the agent stops before calling
      search respects a price ceiling — anything, as long as it names a number
      or an observable outcome. -->
 
-
+The search should always be below the price ceiling if the user mentions it and always returns the lowest price first if there are multiple matches on 5/5 runs
 
 **Why this target:**
-
+The agent should be practical and respect the users budget limitations. It is greedy on optimizing the lowest price to help user save money.
 
 
 ---

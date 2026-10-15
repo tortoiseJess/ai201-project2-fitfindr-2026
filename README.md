@@ -66,7 +66,17 @@ If there is no garments in wardrobe,  then it will only generate generic fitting
     description: str,
     size: str | None ,
     max_price: float | None
-- **Returns:** list[dict]  A list of matching listing dicts, best match first. 
+- **Returns:** list[dict]  A list of matching listing dicts, best match first. One listing looks like this "id": "lst_002",
+    "title": "Y2K Baby Tee — Butterfly Print",
+    "description": "Super cute early 2000s baby tee with butterfly graphic. Fitted crop length. Tag says medium but fits like a small.",
+    "category": "tops",
+    "style_tags": ["y2k", "vintage", "graphic tee", "cottagecore"],
+    "size": "S/M",
+    "condition": "excellent",
+    "price": 18.00,
+    "colors": ["white", "pink", "purple"],
+    "brand": null,
+    "platform": "depop"
 - **When it has nothing:** Returns an empty list when nothing matches.
 
 ### `suggest_outfit`
@@ -103,10 +113,20 @@ If there is no garments in wardrobe,  then it will only generate generic fitting
 
 **Where it lives:** `agent.py::run_agent`
 
-**How the query is parsed:** <!-- regex, string splitting, or asking the model — say which -->
+**How the query is parsed:**  regex and string splitting
 
-**What moves through the session:** <!-- which fields, in what order -->
-
+**What moves through the session:**  states dictionary
+        "query": query,              # what the user typed
+        "parsed": {},                # description / size / max_price you pulled out of it
+        "search_results": [],        # everything search_listings returned
+        "selected_item": None,       # the one you chose — goes into suggest_outfit
+        "wardrobe": wardrobe,        # the user's wardrobe
+        "outfit_suggestion": None,   # what suggest_outfit returned
+        "fit_card": None,            # what create_fit_card returned
+        "error": None,               # set when the run ended early
+    }
+order is query, parsed, search_results or error.
+if not error, then selected_item from user, wardrobe is supplied for outfit suggestion. Then finally fit_card.
 ---
 
 ## Sample Run
