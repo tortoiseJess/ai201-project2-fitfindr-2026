@@ -55,7 +55,7 @@ def search_listings(
         max_price:   maximum price, inclusive, or None to skip price filtering.
 
     Returns:
-        A list of matching listing dicts, best match first.
+        A list of matching listing dicts, best match first. 
         **Returns an empty list when nothing matches — an empty list, not None,
         and not an exception.** Your loop branches on this.
 

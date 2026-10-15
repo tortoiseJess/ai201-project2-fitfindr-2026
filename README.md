@@ -40,9 +40,10 @@
 ## What This Does
 
 <!-- Three or four sentences: what a user asks for, and what they get back. -->
-
-
-
+What the user gives: a plain-language request with an optional size and price.
+On a match: it picks a garment from the listings json, suggests an outfit, then writes a caption.
+On no match: it stops and tells the user what to change.
+If there is no garments in wardrobe,  then it will only generate generic fitting advice.
 ---
 
 ## Tool Inventory
@@ -59,24 +60,29 @@
 
 ### `search_listings`
 
-- **What it does:**
+- **What it does:** Search the listings data for items matching a description, and optionally a
+    size and a price ceiling.
 - **Inputs:** <!-- name and type each: `max_price` (float), not "a price" -->
-- **Returns:**
-- **When it has nothing:**
+    description: str,
+    size: str | None ,
+    max_price: float | None
+- **Returns:** list[dict]  A list of matching listing dicts, best match first. 
+- **When it has nothing:** Returns an empty list when nothing matches.
 
 ### `suggest_outfit`
 
-- **What it does:**
-- **Inputs:**
-- **Returns:**
-- **When it has nothing:**
+- **What it does:**Given a thrifted item and the user's wardrobe, suggest one or two outfits.
+- **Inputs:** new_item: dict, wardrobe: dict
+- **Returns:** str. A non-empty string with outfit suggestions.
+- **When it has nothing:** With an empty wardrobe, return general styling advice rather than
+        raising or returning ""
 
 ### `create_fit_card`
 
-- **What it does:**
-- **Inputs:**
-- **Returns:**
-- **When it has nothing:**
+- **What it does:** Write a short caption someone would actually post about the find.
+- **Inputs:**outfit: str, new_item: dict
+- **Returns:** str. A two-to-four sentence caption.
+- **When it has nothing:**  If `outfit` is empty or whitespace, return a descriptive message/
 
 ---
 
@@ -93,7 +99,7 @@
      The grader checks your code against what you claim here, so the file and
      function have to be real. -->
 
-**Branch rule:**
+**Branch rule:** "If search_listings returns an empty list, put a message in the session and stop. Otherwise, take the first result and go to suggest_outfit."
 
 **Where it lives:** `agent.py::run_agent`
 

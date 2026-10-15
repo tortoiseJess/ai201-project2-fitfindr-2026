@@ -90,12 +90,12 @@
       },
       {
         "id": "w_010",
-        "name": "Black crossbody bag",
-        "category": "accessories",
-        "colors": ["black"],
-        "style_tags": ["minimal", "accessories", "everyday"],
-        "notes": null
-      }
+          "name": "Black crossbody bag",
+          "category": "accessories",
+          "colors": ["black"],
+          "style_tags": ["minimal", "accessories", "everyday"],
+          "notes": null
+        }
     ]
   },
 
