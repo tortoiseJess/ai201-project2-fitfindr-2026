@@ -141,7 +141,32 @@ if not error, then selected_item from user, wardrobe is supplied for outfit sugg
 ```
 $ python app.py ask '...'
 
-```
+```                                                                                                         
+=== A query the data can match ===
+  found:    Y2K Baby Tee — Butterfly Print — $18.0 on depop
+  outfit:   **Outfit 1: Streetwear Edge**
+*   Y2K Baby Tee — Butterfly Print
+*   Baggy straight-leg jeans, dark wash
+*   Chunky white sneakers
+*   Black crossbody bag
+
+*Stylist tip: Tuck the baby tee in to highlight the waist against the baggy jeans.*
+
+**Outfit 2: Grunge Contrast**
+*   Y2K Baby Tee — Butterfly Print
+*   Vintage black denim jacket
+*   Wide-leg khaki trousers
+*   Black combat boots
+
+*Stylist tip: The combat boots ground the sweet pink and purple butterfly print.*
+  fit card: Found this adorable butterfly print Y2K baby tee and I am obsessed with the pink and purple colorway. It’s giving total 2000s pop star off-duty, and you can grab it on my Depop for just $18 🦋
+
+=== A query it can't ===
+  stopped: No listings matched. You could raise your $5 budget, drop the size XXS filter, or try broader keywords than "designer ballgown".
+  fit_card is None — it should still be None here
+
+The second one should stop before the fit card. If both paths look the same,
+the branch isn't doing anything yet.
 
 **The three tools, tested one at a time**
 

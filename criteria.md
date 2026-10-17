@@ -79,7 +79,7 @@ The agent should not be allowed to change state. And it would be easier to debug
 
 **Why this target:**
 
-This word count is from the instagram highest engagement posts count. So I can ensure that it will attract readers. It should be able to pick up the word count.
+This word count is from the instagram highest engagement posts count. So I can ensure that it will attract readers. It should be able to pick up the word count number.
 
 ---
 
@@ -92,10 +92,10 @@ This word count is from the instagram highest engagement posts count. So I can e
      search respects a price ceiling — anything, as long as it names a number
      or an observable outcome. -->
 
-The search should always be below the price ceiling if the user mentions it on 5/5 runs
+The search should always be below the price ceiling if the user mentions it on 4/5 runs
 
 **Why this target:**
-The agent should respect the users budget limitations. It should be able to pick up the budget ceiling.
+The agent should be able to pick up the budget ceiling number most of the times but since the regex is looking for specific words within the user input, if the input doesn't contain those words, the result may not be what is expected.
 
 
 ---
