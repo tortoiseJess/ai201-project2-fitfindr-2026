@@ -146,10 +146,42 @@ def suggest_outfit(new_item: dict, wardrobe: dict) -> str:
         4. Return the model's response.
 
     Test it from a terminal before you move on:
-        python -c "from tools import suggest_outfit; from utils.data_loader import get_example_wardrobe, load_listings; print(suggest_outfit(load_listings()[0], get_example_wardrobe()))"
+        python3 -c "from tools import suggest_outfit; from utils.data_loader import get_example_wardrobe, load_listings; print(suggest_outfit(load_listings()[0], get_example_wardrobe()))"
     """
-    # TODO: replace this with your implementation
-    return ""
+    item_desc = (
+        f"{new_item['title']} ({new_item['category']}, "
+        f"colors: {', '.join(new_item['colors'])}, "
+        f"style: {', '.join(new_item['style_tags'])})"
+    )
+    system = "You are a friendly thrift-fashion stylist. Keep suggestions short and concrete."
+    items = wardrobe.get("items", [])
+
+    # Step 1: check whether wardrobe['items'] is empty
+    if not items:
+        # Step 2: if it is, ask the model for general styling ideas for this item
+        prompt = (
+            f"I'm thinking about buying this thrifted item: {item_desc}.\n"
+            "I haven't shared my wardrobe. Suggest one or two outfits with "
+            "general styling ideas for this item (types of pieces, shoes, vibe)."
+        )
+    else:
+        # Step 3: otherwise, format the wardrobe items into the prompt and ask
+        # for specific combinations naming pieces the user already owns
+        wardrobe_lines = "\n".join(
+            f"- {w['name']} ({w['category']}; colors: {', '.join(w['colors'])}; "
+            f"style: {', '.join(w['style_tags'])})"
+            for w in items
+        )
+        prompt = (
+            f"I'm thinking about buying this thrifted item: {item_desc}.\n\n"
+            f"Here is my wardrobe:\n{wardrobe_lines}\n\n"
+            "Suggest one or two outfits combining the new item with pieces I "
+            "already own. Name those pieces exactly as listed."
+        )
+
+    # Step 4: return the model's response
+    response = generate(prompt, system=system)
+    return response.strip() or "Try pairing this piece with simple neutral basics and clean shoes."
 
 
 # ── Tool 3: create_fit_card ───────────────────────────────────────────────────
@@ -186,7 +218,31 @@ def create_fit_card(outfit: str, new_item: dict) -> str:
         3. Call generate() and return the response.
 
     Test it from a terminal before you move on:
-        python -c "from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('jeans and white sneakers', load_listings()[0]))"
+        python3 -c "from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('jeans and white sneakers', load_listings()[0]))"
     """
-    # TODO: replace this with your implementation
-    return ""
+    # Step 1: guard against an empty or whitespace-only outfit
+    if not outfit or not outfit.strip():
+        return "No outfit suggestion was provided, so there's nothing to write a fit card about yet."
+
+    # Step 2: build a prompt with the item details and the outfit
+    system = (
+        "You write short, casual social media captions for thrift finds. "
+        "Sound like a real person posting, not a product listing."
+    )
+    prompt = (
+        f"Item: {new_item['title']}\n"
+        f"Price: ${new_item['price']:.0f}\n"
+        f"Platform: {new_item['platform']}\n"
+        f"Colors: {', '.join(new_item['colors'])}\n"
+        f"Style: {', '.join(new_item['style_tags'])}\n"
+        f"Outfit idea: {outfit.strip()}\n\n"
+        "Write a two-to-four sentence caption for a post about this find. "
+        "Mention the item, its price, and the platform once each, and be specific "
+        "about the vibe. No hashtags spam, at most one emoji."
+    )
+
+    # Step 3: call generate() and return the response
+    response = generate(prompt, system=system)
+    return response.strip() or (
+        f"Found {new_item['title']} on {new_item['platform']} for ${new_item['price']:.0f}. Obsessed."
+    )
