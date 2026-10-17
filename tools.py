@@ -20,7 +20,9 @@ That last line is what your loop branches on. "Returns a list" earns nothing —
 the description has to say what is *in* the list.
 """
 
-import config  # noqa: F401 — you'll use this in search_listings
+import re
+
+import config
 from generate import generate
 from utils.data_loader import load_listings
 
@@ -76,10 +78,44 @@ def search_listings(
            at most config.SEARCH_RESULT_LIMIT of them.
 
     Test it from a terminal before you move on:
-        python -c "from tools import search_listings; print(search_listings('graphic tee', max_price=30))"
+        python3 -c "from tools import search_listings; print(search_listings('graphic tee', max_price=30))"
     """
-    # TODO: replace this with your implementation
-    return []
+    # Step 1: load every listing
+    listings = load_listings()
+
+    # Step 2: filter by max_price and size, when each is provided
+    if max_price is not None:
+        listings = [l for l in listings if l["price"] <= max_price]
+    if size:
+        wanted = _size_tokens(size)
+        # a size matches when every token of the request is a whole token of the
+        # listing's size: "M" matches "S/M", "US 9" matches "US 9", but "S" does
+        # not match "US 9" or "XL".
+        listings = [l for l in listings if wanted and wanted <= _size_tokens(l["size"])]
+
+    # Step 3: score what's left by keyword overlap with the description
+    keywords = set(re.findall(r"[a-z0-9]+", description.lower()))
+    scored = []
+    for l in listings:
+        haystack = " ".join(
+            [l["title"], l["description"], l["category"], *l["style_tags"], *l["colors"], l["brand"] or ""]
+        ).lower()
+        words = set(re.findall(r"[a-z0-9]+", haystack))
+        scored.append((len(keywords & words), l))
+
+    # Step 4: drop anything scoring zero
+    scored = [(s, l) for s, l in scored if s > 0]
+
+    # Step 5: sort by score (highest first) and cap at SEARCH_RESULT_LIMIT
+    scored.sort(key=lambda pair: pair[0], reverse=True)
+    results = [l for _, l in scored[: config.SEARCH_RESULT_LIMIT]]
+
+    return results
+
+
+def _size_tokens(size: str) -> set[str]:
+    """Split a size string into lowercase whole tokens: 'S/M' -> {'s', 'm'}."""
+    return set(re.findall(r"[a-z0-9.]+", size.lower()))
 
 
 # ── Tool 2: suggest_outfit ────────────────────────────────────────────────────

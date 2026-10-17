@@ -79,7 +79,7 @@ The agent should not be allowed to change state. And it would be easier to debug
 
 **Why this target:**
 
-This word count is from the instagram highest engagement posts count. So I can ensure that it will attract readers.
+This word count is from the instagram highest engagement posts count. So I can ensure that it will attract readers. It should be able to pick up the word count.
 
 ---
 
@@ -92,10 +92,10 @@ This word count is from the instagram highest engagement posts count. So I can e
      search respects a price ceiling — anything, as long as it names a number
      or an observable outcome. -->
 
-The search should always be below the price ceiling if the user mentions it and always returns the lowest price first if there are multiple matches on 5/5 runs
+The search should always be below the price ceiling if the user mentions it on 5/5 runs
 
 **Why this target:**
-The agent should be practical and respect the users budget limitations. It is greedy on optimizing the lowest price to help user save money.
+The agent should respect the users budget limitations. It should be able to pick up the budget ceiling.
 
 
 ---

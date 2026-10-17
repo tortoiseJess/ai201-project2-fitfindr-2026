@@ -72,9 +72,9 @@ def run_agent(query: str, wardrobe: dict) -> dict:
          on each one before you go again. It raises when the count passes
          MAX_ITERATIONS in config.py — see trace.py.
 
-      3. Parse the query into a description, a size, and a max_price. Regex,
-         string splitting, or asking the model are all fine — say which you
-         chose in your README. Put the result in session["parsed"].
+        3. Parse the query into a description, a size, and a max_price. Regex,
+            string splitting, or asking the model are all fine — say which you
+            chose in your README. Put the result in session["parsed"].
 
       4. Call search_listings() with what you parsed.
          Put the results in session["search_results"].
