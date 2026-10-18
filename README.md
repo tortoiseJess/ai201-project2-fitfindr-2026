@@ -214,15 +214,15 @@ Nothing beats a broken-in pair of vintage Levi's 501s, especially in this perfec
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:*"I gave Claude my search_listings spec.
+- *What came back:* It returned None on no match instead of an empty list, so I changed it
+- *What I changed:* I changed to need to return an empty list 
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* It split my query using regex 
+- *What came back:* it was unable to capture up to or < symbols for users budget.
+- *What I changed:* so I asked it to supply more key words to capture ceiling
 
 <!-- ═══════════════════════ UNIT 4 — THE TEST ═══════════════════════
 
