@@ -54,11 +54,11 @@ I want the agent to strictly follow this rule and stop when there is no match, a
      compares session["selected_item"] against what actually reached
      suggest_outfit is the shape you're after. -->
 
-the list[dict] list of listings found in the search should have every element the same in the subsequent tool that it calls in all of the 5 /5 runs.
-*corrected*: the search_results[0] should be the same in subsequent tool 
+original: the list[dict] list of listings found in the search should have every element the same in the subsequent tool that it calls in all of the 5 /5 runs.
+*corrected*: the search_results[0] should be the same btw search_listing --> search_outfit-->create_fit_card
 **Why this target:**
 The agent should not be allowed to change state. And it would be easier to debug if there was a state bug or the llm needs better prompting.
-
+*correction reason* only the first search result is passed.
 
 ---
 
