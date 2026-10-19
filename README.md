@@ -244,8 +244,8 @@ Nothing beats a broken-in pair of vintage Levi's 501s, especially in this perfec
 
 | Criterion | Target | Try 1 | Try 2 | Try 3 | Try 4 | Try 5 | Verdict |
 |---|---|---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |  |  |
+| 1. Full three-tool run returns a fit card | 4 of 5 | PASS  | PASS | PASS | PASS |PASS  | MET(5/5) |
+| 2. Empty search stops before tool 2 | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
 | 3.  |  |  |  |  |  |  |  |
 | 4.  |  |  |  |  |  |  |  |
 | 5.  |  |  |  |  |  |  |  |

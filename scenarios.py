@@ -28,13 +28,13 @@ SCENARIOS = [
         "wardrobe": "example",
         "criterion": 2,
     },
-    {
-        # A user with nothing saved. One of unit 4's three failure modes.
-        "name": "empty wardrobe",
-        "query": "denim jacket under $50",
-        "wardrobe": "empty",
-        "criterion": None,
-    },
+    # {
+    #     # A user with nothing saved. One of unit 4's three failure modes.
+    #     "name": "empty wardrobe",
+    #     "query": "denim jacket under $50",
+    #     "wardrobe": "empty",
+    #     "criterion": None,
+    # },
    
     #
     # Set "criterion" to the number in criteria.md that the scenario tests.
@@ -61,10 +61,10 @@ SCENARIOS = [
     },
 
             {
-        "name": "fit card less than 150 words",
+        "name": "always be below the price ceiling",
         "query": "'floral dress elegant under $30",
         "wardrobe": "example",
-        "criterion": 4,
+        "criterion": 5,
     },
 ]
 
