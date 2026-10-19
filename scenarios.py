@@ -35,7 +35,7 @@ SCENARIOS = [
         "wardrobe": "empty",
         "criterion": None,
     },
-    # TODO: add what your criteria 3, 4 and 5 need.
+   
     #
     # Set "criterion" to the number in criteria.md that the scenario tests.
     # "criterion": None means a diagnostic run — useful to have, but it isn't
@@ -43,10 +43,29 @@ SCENARIOS = [
     #
     # For a state criterion, any normal query works — what you're checking is
     # what ends up in the session, not what the user typed.
+    {
+        "name": "same state across runs",
+        "query": "cool denim jacket under $50",
+        "wardrobe": "example",
+        "criterion": 3,
+    },
     #
     # For a fit-card criterion, you probably want the SAME query listed more
     # than once, or several different items, depending on what your criterion
     # actually says.
+        {
+        "name": "fit card less than 150 words",
+        "query": "pink mini skirt under $40",
+        "wardrobe": "example",
+        "criterion": 4,
+    },
+
+            {
+        "name": "fit card less than 150 words",
+        "query": "'floral dress elegant under $30",
+        "wardrobe": "example",
+        "criterion": 4,
+    },
 ]
 
 WARDROBES = ("example", "empty")
