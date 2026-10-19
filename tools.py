@@ -80,6 +80,7 @@ def search_listings(
     Test it from a terminal before you move on:
         python3 -c "from tools import search_listings; print(search_listings('graphic tee', max_price=30))"
     """
+    # print("search_listings: description=", description, " size=", size, " max_price=", max_price)
     # Step 1: load every listing
     listings = load_listings()
 
@@ -108,8 +109,9 @@ def search_listings(
 
     # Step 5: sort by score (highest first) and cap at SEARCH_RESULT_LIMIT
     scored.sort(key=lambda pair: pair[0], reverse=True)
+    # print("search_listings: scored= ", scored[:3])
     results = [l for _, l in scored[: config.SEARCH_RESULT_LIMIT]]
-
+    
     return results
 
 

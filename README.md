@@ -306,13 +306,42 @@ that produced it:
 **Happy path**
 
 ```
+ python3 app.py ask 'under $100 blue dress floral' --trace
+[1] search_listings (via MCP)
+      in:  dict with keys: description, size, max_price
+      out: 6 items: 90s Silk Slip Dress — Floral, Midi Length, Vintage Levi's 501 Jeans — Medium Wash, Denim Jacket — Light Wash, Cropped … +3 more
+[2] suggest_outfit
+      in:  dict with keys: new_item, wardrobe
+      out: **Outfit 1: 90s Grunge Contrast** Layer your *Oversized grey crewneck sweatshirt* right over the dress, and fi…
+[3] create_fit_card
+      in:  dict with keys: outfit, new_item
+      out: Found the ultimate 90s floral silk midi and honestly I might keep it. It’s giving effortless grunge layered un…
 
+  Found:    90s Silk Slip Dress — Floral, Midi Length — $30.0 on depop
+
+  Outfit:   **Outfit 1: 90s Grunge Contrast**
+Layer your *Oversized grey crewneck sweatshirt* right over the dress, and finish with *Black combat boots* and the *Black crossbody bag*. It’s effortless and balances the feminine floral print.
+
+**Outfit 2: Streetwear Mix-Up**
+Wear the slip dress over your *White ribbed tank top* (or just wear the dress as-is) with the *Vintage black denim jacket* on top, grounded by *Chunky white sneakers*.
+
+  Fit card: Found the ultimate 90s floral silk midi and honestly I might keep it. It’s giving effortless grunge layered under an oversized crewneck, and it's up on my Depop right now for just $30 🥀
+
+0 model calls this session, 2 served from cache
 ```
 
 **Empty search**
 
 ```
+python3 app.py ask 'under $10' --trace
+[1] search_listings (via MCP)
+      in:  dict with keys: description, size, max_price
+      out: [] (empty)
+      →    branch: no results, stopping before suggest_outfit
 
+  No listings matched. You could raise your $10 budget, or try broader keywords than "".
+
+0 model calls this session
 ```
 
 **On the MCP move:** <!-- what changed in your code, and whether anything
@@ -399,3 +428,28 @@ full. -->
 ---
 
 📖 **How to run this project: [RUNNING.md](RUNNING.md)**
+
+<!-- ═════════════════════════════════════════════════════════════════════
+
+python3 mcp_client.py 
+Asking mcp_server.py what it offers…
+
+Asking mcp_server.py what it offers…
+
+  search_listings
+    
+Search the listings.json data for items matching a description, and optionally a
+size and a price ceiling.
+It needs as inputs: `max_price` (float),
+description: str,
+size: str | None ,
+max_price: float | None
+It will return A list of matching listing dicts, best match first. 
+If there are no matches, it will return an empty list.
+
+
+    - description: string
+    - size: string  (optional)
+    - max_price: number  (optional)
+
+<!-- ═════════════════════════════════════════════════════════════════════
