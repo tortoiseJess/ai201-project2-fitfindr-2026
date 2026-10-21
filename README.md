@@ -649,7 +649,7 @@ python3 app.py ask 'under $10' --trace
 behaved differently afterwards. If the rewire didn't work, say exactly where it
 broke — the error text and the last thing that worked. That earns the point in
 full. -->
-
+The search_listing tool was moved to the MCP tool call. Behaviour didn't change.
 
 
 ---
@@ -977,7 +977,22 @@ Wrote results/run_2026-10-20_2009_before.md
      you did. "I ran out of time" is fine if it's true. Pretending nothing is
      left is not. -->
 
+The criteria all passed. Nothing in the spec is broken.
 
+## How I Used AI
+
+<!-- Two specific moments. What you asked, what came back, what you changed.
+
+     "I used Claude to help me code" is not enough.
+
+     "I gave Claude my search_listings spec. It returned None on no match
+     instead of an empty list, so I changed it" is the level we want. -->
+
+**Moment 1**
+
+- *What I asked for:*"I ask Claude to help print out explicit variable trackers in trace.py for criterion validation.
+- *What came back:* It told me that there was a duplicate bug in my scenario.
+- *What I changed:* I updated my scenario and it helped me add tracing.
 
 <!-- ═════════════════════════════════════════════════════════════════════
 
