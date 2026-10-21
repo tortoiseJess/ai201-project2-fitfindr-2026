@@ -139,9 +139,22 @@ def run_agent(query: str, wardrobe: dict) -> dict:
                 "size": parsed["size"],
                 "max_price": parsed["max_price"],
             })
+            ceiling = parsed["max_price"]
+            if ceiling is None:
+                price_note = "criterion 5: parsed max_price = None (no ceiling found, price filter skipped)"
+            elif not session["search_results"]:
+                price_note = f"criterion 5: parsed max_price = ${ceiling:.2f}, no results to check"
+            else:
+                top_price = session["search_results"][0]["price"]
+                highest = max(r["price"] for r in session["search_results"])
+                relation = "<" if top_price < ceiling else ("=" if top_price == ceiling else ">")
+                verdict = "PASS" if highest <= ceiling else "FAIL"
+                price_note = (f"criterion 5: {verdict} — parsed max_price = ${ceiling:.2f}; "
+                              f"top result ${top_price:.2f} ({relation} ceiling); "
+                              f"highest result ${highest:.2f} ({'<=' if highest <= ceiling else '>'} ceiling)")
             trace.step("search_listings (via MCP)", inputs={"description": parsed["description"], "size": parsed["size"], "max_price": parsed["max_price"]},
                 returned=session["search_results"],
-                note="" if session["search_results"] else "branch: no results, stopping before suggest_outfit")
+                note=price_note + ("" if session["search_results"] else " | branch: no results, stopping before suggest_outfit"))
             # Criterion 3: frozen copy of the top result, the only item passed on
             top_snapshot = copy.deepcopy(session["search_results"][0]) if session["search_results"] else None
             # THE BRANCH: nothing came back, so stop before suggest_outfit and
